@@ -3,11 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./sass/main.scss">
+    <link rel="stylesheet" href="./sass/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap" rel="stylesheet">
     <script src="./main.js" defer></script>
     <title>To-do App</title>
   </head>
   <body>
-    
+    <div class="todo-app">
+      <h1>To-Do List <img src="./images/todoListIcon.png" alt="todo list icon"></h1>
+      <div class="row">
+        <input type="text" id="inputBox" placeholder="Add your task here">
+        <button class="add">Add</button>
+      </div>
+      <ul id="listContainer">
+      </ul>
+      <footer>
+        <p><span class="counter">0</span> items left</p>
+        <div class="buttons">
+          <button class="all">All</button>
+          <button class="active">Active</button>
+          <button class="completed">Completed</button>
+        </div>
+        <button class="clear">Clear Completed</button>
+      </footer>
+    </div>
   </body>
 </html>
