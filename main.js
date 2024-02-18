@@ -1,4 +1,3 @@
-
 const inputBox = document.querySelector("#inputBox");
 const listContainer = document.querySelector("#listContainer");
 const addButton = document.querySelector(".add");
@@ -6,7 +5,8 @@ const spanCounter = document.querySelector(".counter");
 const allButton = document.querySelector(".all");
 const activeButton = document.querySelector(".active");
 const completedButton = document.querySelector(".completed");
-
+const clearButton = document.querySelector(".clear");
+let counter = localStorage.getItem("count" || 0);
 
 
 addButton.addEventListener("click", addTask);
@@ -14,18 +14,18 @@ listContainer.addEventListener("click",checkRemove)
 allButton.addEventListener("click", toggleClass);
 activeButton.addEventListener("click", toggleClass);
 completedButton.addEventListener("click", toggleClass);
+clearButton.addEventListener("click", toggleClass);
 inputBox.addEventListener("keydown", function(e){
     if(e.key === "Enter")
         return addTask()
 });
 
-let counter = li.length;
 
 
 function addTask(){
     if(inputBox.value === ""){
-        alert("Write task befor add")
-    } else{
+        alert("Write a New Task")
+    } else {
         let li = document.createElement("li");
         li.innerHTML = inputBox.value;
         li.classList.add("all");
@@ -46,44 +46,91 @@ function checkRemove(event){
     if(eT.tagName === "LI"){
         eT.classList.toggle("checked");
         saveData();
-    } else if(eT.tagName === "SPAN"){
-        eT.parentElement.remove();
-        counter --;
-        spanCounter.innerHTML = counter;
-        saveData();
+        if (eT.className.includes("checked")){
+            counter --;
+            spanCounter.innerHTML = counter;
+            saveData();
+        } else {
+            counter ++;
+            spanCounter.innerHTML = counter;
+            saveData();
+        }
+    }
+    if(eT.tagName === "SPAN"){
+        if (eT.parentElement.className.includes("checked")){
+            eT.parentElement.remove();
+            saveData();
+        } else {
+            eT.parentElement.remove();
+            counter --;
+            spanCounter.innerHTML = counter;
+            saveData();
+        }
     }
 };
 
 function saveData(){
     localStorage.setItem("data", listContainer.innerHTML);
+    localStorage.setItem("count", spanCounter.innerHTML);
 };
 
 function showTask(){
     listContainer.innerHTML = localStorage.getItem("data");
+    spanCounter.innerHTML = localStorage.getItem("count");
 };
 showTask();
 
 
-function toggleClass(){
-
-    let li = document.querySelectorAll("li");
-    console.log(counter)
-    for(let i = 0; i < counter; i ++){
-        if(li[i].className.includes() == "checked"){
-            console.log("yes")
-            // li[i].style.display = "none"
+function toggleClass(event){
+    let numLi = document.querySelectorAll("li");
+    let target = event.target;
+    for(let i = 0; i < numLi.length ; i ++){
+        let name = numLi[i].className;
+        let list = numLi[i].classList;
+        if (target == allButton){
+            if(name.includes("all")){
+                list.remove("display");
+        }}
+        else if (target == activeButton){
+            if(name.includes("active")){
+                list.remove("display");}
+            if(name.includes("checked")){
+                list.add("display");}  
         }
-            console.log("no")
+        else if (target == completedButton){
+            if(name.includes("active")){
+                list.add("display");}
+            if(name.includes("checked")){
+                list.remove("display");}
     }
-};
-
-function checkedCounter (){
-    if(li.classList === 'checked'){
-        
-    } else if(li.classList === ""){
-        
+    if (target == clearButton){
+        if(name.includes("checked")){
+            numLi[i].remove();  
+        }
+        saveData();
     }
-};
+}}
+//     if (target == allButton){
+//         for(let i = 0; i < numLi.length ; i ++){
+//             if(numLi[i].className.includes("all")){
+//                 numLi[i].classList.remove("display");
+//         }}
+//     } else if (target == activeButton){
+//         for(let i = 0; i < numLi.length ; i ++){
+//             if(numLi[i].className.includes("active")){
+//                 numLi[i].classList.remove("display");}
+//             if(numLi[i].className.includes("checked")){
+//                 numLi[i].classList.add("display");}
+            
+//             }
+//     } else if (target == completedButton){
+//         for(let i = 0; i < numLi.length ; i ++){
+//             if(numLi[i].className.includes("active")){
+//                 numLi[i].classList.add("display");
+//             }
+//             if(numLi[i].className.includes("checked")){
+//                 numLi[i].classList.remove("display");
+//  }}}};
 
 
 // If target all
