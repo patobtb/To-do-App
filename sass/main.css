@@ -116,3 +116,6 @@ p{
     color: #555;
     background-color: #edeef0;
 }
+.display{
+    display: none;
+}
